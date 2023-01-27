@@ -4,13 +4,12 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh(returnStdout: true, script: "git tag --contains").trim()
                 sh 'make test'
             }
         }
         stage('Build') {
             when {
-                tag '*-*-*'
+                tag '**/*-*-*'
             }
             steps {
                 sh 'make docker'
@@ -18,7 +17,7 @@ pipeline {
         }
         stage('Publish') {
             when {
-                tag '*-*-*'
+                tag '**/*-*-*'
             }
             environment {
                 DOCKER_TOKEN = credentials('docker-token')
