@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        TAG_NAME = sh(returnStdout: true, script: "git describe --tags").trim()
+    }
     stages {
         stage('Test') {
             steps {
@@ -10,6 +13,7 @@ pipeline {
         stage('Build') {
             when {
                 buildingTag()
+                beforeAgent true
             }
             steps {
                 sh 'make docker'
@@ -18,6 +22,7 @@ pipeline {
         stage('Publish') {
             when {
                 buildingTag()
+                beforeAgent true
             }
             environment {
                 DOCKER_TOKEN = credentials('docker-token')
