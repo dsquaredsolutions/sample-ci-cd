@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Test') {
             steps {
-                sh 'echo $TAG_NAME'
+                sh(returnStdout: true, script: "git tag --contains").trim()
                 sh 'make test'
             }
         }
