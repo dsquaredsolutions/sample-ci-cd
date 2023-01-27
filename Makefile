@@ -22,6 +22,10 @@ docker:
 test:
 	go test -v -p 1 -race ${FLAGS} ${TEST_PKGS}
 
+publish:
+	docker login -u dsquaredsolutions -p ${DOCKER_TOKEN}
+	docker push dsquaredsolutions/sample-ci-cd:${REPO_VERSION}
+
 clean:
 	rm -rf build/
 
