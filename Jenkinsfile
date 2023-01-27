@@ -4,12 +4,13 @@ pipeline {
     stages {
         stage('Test') {
             steps {
+                sh 'echo $TAG_NAME'
                 sh 'make test'
             }
         }
         stage('Build') {
             when {
-                buildingTag()
+                tag '*-*-*'
             }
             steps {
                 sh 'make docker'
@@ -17,7 +18,7 @@ pipeline {
         }
         stage('Publish') {
             when {
-                buildingTag()
+                tag '*-*-*'
             }
             environment {
                 DOCKER_TOKEN = credentials('docker-token')
