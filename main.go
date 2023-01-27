@@ -19,6 +19,7 @@ func Func1(result string) bool {
 
 func main() {
 	fmt.Println("sample-ci-cd!")
+	fmt.Println("sample-ci-cd!")
 
 	mux := http.NewServeMux()
 
