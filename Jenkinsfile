@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Build') {
             when {
-                tag '**/*-*-*'
+                tag '**'
             }
             steps {
                 sh 'make docker'
@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Publish') {
             when {
-                tag '**/*-*-*'
+                tag '**'
             }
             environment {
                 DOCKER_TOKEN = credentials('docker-token')
