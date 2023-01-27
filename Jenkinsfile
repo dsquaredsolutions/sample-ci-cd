@@ -8,17 +8,11 @@ pipeline {
             }
         }
         stage('Build') {
-            when {
-                tag '**'
-            }
             steps {
                 sh 'make docker'
             }
         }
         stage('Publish') {
-            when {
-                tag '**'
-            }
             environment {
                 DOCKER_TOKEN = credentials('docker-token')
             }
