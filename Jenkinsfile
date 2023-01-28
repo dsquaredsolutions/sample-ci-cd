@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        TAG_NAME = sh(returnStdout: true, script: "git describe --tags").trim()
+        TAG_NAME = sh(returnStdout: true, script: "git describe --always --dirty --tags").trim()
     }
     stages {
         stage('Test') {
@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build') {
             when {
-                buildingTag()
+                tag comparator: 'REGEXP', pattern: '\\d+.\\d+.\\d+'
                 beforeAgent true
             }
             steps {
@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Publish') {
             when {
-                buildingTag()
+                tag comparator: 'REGEXP', pattern: '\\d+.\\d+.\\d+'
                 beforeAgent true
             }
             environment {
