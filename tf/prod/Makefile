@@ -5,7 +5,7 @@ init:
 	terraform init
 
 plan:
-	@terraform plan -var="private_key=${PRIV_KEY}" -var="container_tag=${REPO_VERSION}" -out=app_prod.tfplan
+	@terraform plan -var="container_tag=${REPO_VERSION}" -out=app_prod.tfplan
 
 apply:
 	terraform apply -auto-approve "app_prod.tfplan"

@@ -5,7 +5,7 @@ init:
 	terraform init
 
 plan:
-	@terraform plan -var="private_key=${PRIV_KEY}" -out=app_dev.tfplan
+	@terraform plan -out=app_dev.tfplan
 
 apply:
 	terraform apply -auto-approve "app_dev.tfplan"

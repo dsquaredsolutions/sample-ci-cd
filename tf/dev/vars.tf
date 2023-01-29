@@ -3,19 +3,15 @@ variable "common_tags" {
 }
 
 variable "private_key" {
-  type      = string
-  default   = ""
-  sensitive = true
+  type = string
 }
 
 variable "certificate_body" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "certificate_chain" {
-  type    = string
-  default = ""
+  type = string
 }
 
 variable "name" {

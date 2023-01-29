@@ -2,7 +2,6 @@ REPO_VERSION ?= $(shell git rev-parse --git-dir > /dev/null 2>&1 && git fetch -q
 REPO_REV ?= $(shell git rev-parse --git-dir > /dev/null 2>&1 && git rev-parse HEAD 2>/dev/null)
 BUILD_DATE := $(shell date -u +%FT%T)
 TEST_PKGS := $(shell find . -name "*_test.go" -not -wholename "*/vendor/*" -exec dirname {} \; | uniq)
-PRIV_KEY := $(shell cat priv.key)
 export
 
 build:
@@ -33,8 +32,14 @@ publish:
 deploy_dev:
 	(cd tf/dev ; make all)
 
+destroy_dev:
+	(cd tf/dev ; make destroy)
+
 deploy_prod:
 	(cd tf/prod ; make all)
+
+destroy_prod:
+	(cd tf/prod ; make destroy)
 
 clean:
 	rm -rf build/
