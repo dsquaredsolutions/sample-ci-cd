@@ -2,6 +2,8 @@ REPO_VERSION ?= $(shell git rev-parse --git-dir > /dev/null 2>&1 && git fetch -q
 REPO_REV ?= $(shell git rev-parse --git-dir > /dev/null 2>&1 && git rev-parse HEAD 2>/dev/null)
 BUILD_DATE := $(shell date -u +%FT%T)
 TEST_PKGS := $(shell find . -name "*_test.go" -not -wholename "*/vendor/*" -exec dirname {} \; | uniq)
+PRIV_KEY := $(shell cat priv.key)
+export
 
 build:
 	@mkdir -p build/usr/bin
@@ -17,6 +19,7 @@ docker:
 	--build-arg REPO_REV=${REPO_REV} \
 	--build-arg DATE=${BUILD_DATE} \
 	-t dsquaredsolutions/sample-ci-cd:${REPO_VERSION} \
+	-t dsquaredsolutions/sample-ci-cd:latest \
 	.
 
 test:
@@ -25,6 +28,13 @@ test:
 publish:
 	docker login -u dsquaredsolutions -p ${DOCKER_TOKEN}
 	docker push dsquaredsolutions/sample-ci-cd:${REPO_VERSION}
+	docker push dsquaredsolutions/sample-ci-cd:latest
+
+deploy_dev:
+	(cd tf/dev ; make all)
+
+deploy_prod:
+	(cd tf/prod ; make all)
 
 clean:
 	rm -rf build/

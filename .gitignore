@@ -1,0 +1,8 @@
+build/**
+
+.terraform
+*.tfstate
+*.tfstate.backup
+*.tfplan
+
+priv.key

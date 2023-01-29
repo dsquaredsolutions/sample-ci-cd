@@ -15,10 +15,10 @@ var (
 	gitRevision = Unknown
 	date        = Unknown
 
-	Info info
+	Info Inf
 )
 
-type info struct {
+type Inf struct {
 	Arch         string `json:"arch"`
 	Compiler     string `json:"compiler"`
 	Date         string `json:"build_date"`
